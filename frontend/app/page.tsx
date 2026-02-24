@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RootPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       <h1 className="text-2xl font-bold mb-4">Página de inicio</h1>
       <nav>
         <ul className="space-y-2">

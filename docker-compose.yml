@@ -2,7 +2,7 @@ services:
   db-pruebavt:
     image: postgres:latest
     environment:
-      POSTGRES_USER: postgres 
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pruebaViamatica
       POSTGRES_DB: pruebavt
     ports:
@@ -11,6 +11,34 @@ services:
       - pruebavt:/var/lib/postgresql
       - ./init_db:/docker-entrypoint-initdb.d
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    environment:
+      - PGHOST=db-pruebavt
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=pruebaViamatica
+      - PGDATABASE=pruebavt
+      - JWT_SECRET=algosecreto
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db-pruebavt
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
 volumes:
   pruebavt:

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Nav from "../components/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,36 +31,7 @@ export default function RootLayout({
         <div className="min-h-screen">
           {children}
         </div>
-        {typeof window !== 'undefined' && (
-          <nav className="fixed top-0 right-0 m-4 space-y-2">
-            {sessionStorage.getItem('menu') && (
-              <ul className="space-y-1">
-                {JSON.parse(sessionStorage.getItem('menu') || '[]').map((opt: string) => (
-                  <li key={opt} className="text-sm text-blue-600">
-                    {opt}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <button
-              className="mt-2 px-3 py-1 bg-red-600 text-white rounded text-sm"
-              onClick={() => {
-                const user = JSON.parse(sessionStorage.getItem('user') || 'null');
-                if (user) {
-                  fetch('/api/auth/logout', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: user.id_usuario }),
-                  });
-                }
-                sessionStorage.clear();
-                window.location.href = '/home';
-              }}
-            >
-              Logout
-            </button>
-          </nav>
-        )}
+        <Nav />
       </body>
     </html>
   );

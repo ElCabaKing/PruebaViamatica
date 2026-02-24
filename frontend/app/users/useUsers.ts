@@ -13,7 +13,7 @@ export function useUsers() {
     if (filters.username) params.username = filters.username;
     if (filters.mail) params.mail = filters.mail;
     if (filters.status) params.status = filters.status;
-    const resp = await axios.get(`/api/users/search`, { params });
+    const resp = await axios.get(`http://localhost:3000/api/users/search`, { params });
     setResults(resp.data);
   };
 
