@@ -30,7 +30,7 @@ export class AuthController {
         process.env.JWT_SECRET ?? "secret",
         { expiresIn: "1h" }
       );
-
+      res.cookie("token", token, { httpOnly: true });
       res.status(200).json({ token, user });
     } catch (error: Error | any) {
         console.log(error.message)
@@ -46,6 +46,7 @@ export class AuthController {
         return;
       }
       await this.authDatasource.closeSession(id);
+      res.cookie("token", "", { httpOnly: true });
       res.status(200).json({ mensaje: "Sesion cerrada" });
     } catch (error) {
       const message = error instanceof Error ? error.message : "Error desconocido";
