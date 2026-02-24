@@ -1,4 +1,4 @@
-import { Persona } from "./Persona/Persona.js";
+import { Persona } from "../Persona/Persona.js";
 export class Usuario {
     public readonly id: number;
     public readonly username: string;
