@@ -97,4 +97,7 @@ Esto arrancará tres servicios: la base de datos (postgres), el backend y el fro
 
 ---
 
-¡Listo para desarrollar! Si tienes dudas revisa los scripts en `init_db` y consulta el código fuente.
+- Nota: Trate de hacer lo mejor espero que les guste aunque
+no cumple al 100% con lo solicitado.
+
+Mucha gracias
