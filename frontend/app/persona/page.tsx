@@ -16,36 +16,42 @@ export default function PersonaPage() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "2rem auto" }}>
-      <h1>Registrar Persona</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto p-4">
+      <h1 className="text-xl font-bold mb-4">Registrar Persona</h1>
+      <form onSubmit={handleSubmit} className="space-y-2">
         <input
+          className="w-full p-2 border rounded"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           placeholder="Nombre"
           required
         />
         <input
+          className="w-full p-2 border rounded"
           value={apellidos}
           onChange={(e) => setApellidos(e.target.value)}
           placeholder="Apellidos"
           required
         />
         <input
+          className="w-full p-2 border rounded"
           value={identificacion}
           onChange={(e) => setIdentificacion(e.target.value)}
           placeholder="Identificación"
           required
         />
         <input
+          className="w-full p-2 border rounded"
           type="date"
           value={fechaNacimiento}
           onChange={(e) => setFechaNacimiento(e.target.value)}
           required
         />
-        <button type="submit">Registrar</button>
+        <button className="px-4 py-2 bg-blue-600 text-white rounded" type="submit">
+          Registrar
+        </button>
       </form>
-      <div>{status}</div>
+      <div className="mt-2">{status}</div>
     </div>
   );
 }

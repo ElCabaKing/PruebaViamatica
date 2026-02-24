@@ -15,3 +15,17 @@ export async function getSession(id: number) {
   const resp = await axios.get(`${API_URL}/session/${id}`);
   return resp.data;
 }
+export async function getWelcome(id: number) {
+  const resp = await axios.get(`http://localhost:3000/api/auth/welcome/${id}`);
+  return resp.data;
+}
+
+export async function getDashboard() {
+  const resp = await axios.get(`${API_URL}/api/dashboard`);
+  return resp.data;
+}
+
+export async function getMenu(userId: number) {
+  const resp = await axios.get(`http://localhost:3000/api/menu/${userId}`);
+  return resp.data;
+}

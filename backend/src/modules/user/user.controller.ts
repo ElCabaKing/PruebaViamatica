@@ -1,9 +1,14 @@
 import type { Request, Response } from "express";
 import type { UserRepository } from "./domain/Usuario/user.repository.js";
+import type { PersonaRepository } from "./domain/Persona/persona.repository.js";
+import type { RegistarUsuarioUseCase } from "./application/RegistrarUsuario.use-case.js";
+import { Persona } from "./domain/Persona/Persona.js";
 
 export class UserController {
   constructor(
-    private readonly usuarioRepository: UserRepository
+    private readonly usuarioRepository: UserRepository,
+    private readonly personaRepository: PersonaRepository,
+    private readonly registarUsuarioUseCase: RegistarUsuarioUseCase
   ) {}
 
   async listarUsuarios(req: Request, res: Response): Promise<void> {
@@ -130,7 +135,6 @@ export class UserController {
 
   async uploadUsuarios(req: Request, res: Response): Promise<void> {
     try {
-      // multer should have stored file in req.file
       const file = (req as any).file;
       if (!file) {
         res.status(400).json({ error: "Archivo no proporcionado" });
@@ -139,16 +143,17 @@ export class UserController {
       const content = file.buffer.toString("utf8");
       const lines = content.split(/\r?\n/).filter((l: string) => l.trim());
       for (const line of lines) {
-        const [username, password, mail, personaId] = line.split(",");
-        if (username && password && mail && personaId) {
-          await this.usuarioRepository.registrarNuevoUsuario({
-            id: 0,
-            username,
-            password,
-            mail,
-            personaId: parseInt(personaId, 10),
-            status: "AC"
-          } as any);
+        // espera: nombre,apellidos,identificacion,fechaNacimiento
+        const [nombre, apellidos, identificacion, fechaNacimiento] = line.split(",");
+        if (nombre && apellidos && identificacion && fechaNacimiento) {
+          const persona = Persona.create(
+            0,
+            nombre,
+            apellidos,
+            identificacion,
+            new Date(fechaNacimiento)
+          );
+          await this.registarUsuarioUseCase.execute(persona);
         }
       }
       res.status(201).json({ mensaje: "Carga masiva completada" });

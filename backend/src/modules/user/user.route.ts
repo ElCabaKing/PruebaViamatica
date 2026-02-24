@@ -2,15 +2,19 @@ import type { Router } from "express";
 import multer from "multer";
 import { UserController } from "./user.controller.js";
 import type { UserRepository } from "./domain/Usuario/user.repository.js";
+import type { PersonaRepository } from "./domain/Persona/persona.repository.js";
+import type { RegistarUsuarioUseCase } from "./application/RegistrarUsuario.use-case.js";
 
 // multer memory storage for uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
 export const createUserRoutes = (
   router: Router,
-  usuarioRepository: UserRepository
+  usuarioRepository: UserRepository,
+  personaRepository: PersonaRepository,
+  registarUsuarioUseCase: RegistarUsuarioUseCase
 ): Router => {
-  const userController = new UserController(usuarioRepository);
+  const userController = new UserController(usuarioRepository, personaRepository, registarUsuarioUseCase);
 
   // GET /api/users - Listar todos los usuarios
   router.get("/users", (req, res) => {

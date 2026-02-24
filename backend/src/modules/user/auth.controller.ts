@@ -71,6 +71,7 @@ export class AuthController {
 
   async welcome(req: Request, res: Response): Promise<void> {
     try {
+
       const { id } = req.params;
       const uid = parseInt(id as string, 10);
       if (isNaN(uid)) {

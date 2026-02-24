@@ -37,7 +37,7 @@ const validarUsuarioUseCase = new ValidarUsuario(usuarioRepository, passwordHash
 const apiRouter = Router()
 
 // Registrar rutas
-createUserRoutes(apiRouter, usuarioRepository)
+createUserRoutes(apiRouter, usuarioRepository, personaRepository, registarUsuarioUseCase)
 createPersonaRoutes(apiRouter, personaRepository, registarUsuarioUseCase)
 
 const authController = new AuthController(validarUsuarioUseCase, authRepository, usuarioRepository)

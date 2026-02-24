@@ -54,7 +54,7 @@ export class UsuarioPostgresRepository implements UserRepository {
 
             case "id":
                 query =
-                    `SELECT * from usuarios WHERE id = $1
+                    `SELECT * from usuarios WHERE id_usuario = $1
                 and deleted_at IS NULL`
                 break;
             default:
