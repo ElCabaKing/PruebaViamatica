@@ -38,12 +38,33 @@ export class UsuarioPostgresRepository implements UserRepository {
         return users.rows
     };
 
-    async buscarUsuario(id: number): Promise<Usuario> {
-        const user = await pool.query(
-            `SELECT * from usuarios WHERE id_usuario = $1
-            and deleted_at IS NULL`, [id]);
+    async buscarUsuario(criteria: string, value: string | number): Promise<Usuario> {
+        let query = ""
+        switch (criteria) {
+            case "username":
+                query =
+                    `SELECT * from usuarios WHERE username = $1
+                and deleted_at IS NULL`
+                break;
+            case "email":
+                query =
+                    `SELECT * from usuarios WHERE email = $1
+                and deleted_at IS NULL`
+                break;
+
+            case "id":
+                query =
+                    `SELECT * from usuarios WHERE id = $1
+                and deleted_at IS NULL`
+                break;
+            default:
+                throw new Error("Invalid criteria");
+        }
+
+        const user = await pool.query(query, [value]);
 
         return user.rows[0];
+
     }
 
 }

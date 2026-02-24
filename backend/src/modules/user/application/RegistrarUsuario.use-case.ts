@@ -3,6 +3,7 @@ import type { UserRepository } from "../domain/Usuario/user.repository.js";
 import type { PasswordHasher } from "../domain/passwordHasher.repository.js";
 import { generateBaseEmail } from "../domain/Usuario/email.generator.js";
 import { generateUsername } from "../domain/Usuario/username.generator.js";
+import { generatePassword } from "../domain/Usuario/password.generator.js";
 import { Persona } from "../domain/Persona/Persona.js";
 import { Usuario } from "../domain/Usuario/Usuario.js";
 export class RegistarUsuarioUseCase{
@@ -16,17 +17,19 @@ export class RegistarUsuarioUseCase{
        const personaId = await this.personaRepository.registrarNuevaPersona(persona)
         const userEmail = generateBaseEmail(persona.nombre, persona.apellidos)
         const username = generateUsername(persona.nombre)
-        const passwordHs = await this.passwordHasher.hashPassword(username)
+        const password = generatePassword()
+        console.log("Este es el password",password)
+        const passwordHs = await this.passwordHasher.hashPassword(password)
         
         const usuario = Usuario.create(
             0,
             username, 
-            passwordHs, //Username es el password (cambiar)
+            passwordHs, 
             userEmail,
             personaId, 
             "activo"
         )
-        console.log("usuario",usuario)
+
         await this.usuarioRepository.registrarNuevoUsuario(usuario)
         return 
     }

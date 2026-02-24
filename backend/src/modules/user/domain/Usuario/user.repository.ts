@@ -5,5 +5,5 @@ export interface UserRepository {
     editarUsuario(usuario: Usuario): Promise<void>;
     eliminarUsuario(id: number): Promise<void>;
     listarUsuarios(): Promise<Usuario[]>;
-    buscarUsuario(id: number): Promise<Usuario>;
+    buscarUsuario(criteria: string, value: string|number): Promise<Usuario>;
 }

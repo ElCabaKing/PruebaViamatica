@@ -30,6 +30,8 @@ CREATE TABLE usuarios (
     session_active  BOOLEAN NOT NULL DEFAULT FALSE,
     status          CHAR(2) NOT NULL DEFAULT 'AC',
     persona_id      INTEGER NOT NULL,
+    login_tries     INTEGER NOT NULL DEFAULT 0,
+    last_login      TIMESTAMP NULL,
     deleted_at      TIMESTAMP NULL,
 
     CONSTRAINT fk_usuario_persona

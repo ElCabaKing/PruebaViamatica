@@ -29,7 +29,7 @@ export class UserController {
         return;
       }
 
-      const usuario = await this.usuarioRepository.buscarUsuario(usuarioId);
+      const usuario = await this.usuarioRepository.buscarUsuario("id",usuarioId);
 
       if (!usuario) {
         res.status(404).json({ error: "Usuario no encontrado" });
@@ -56,7 +56,7 @@ export class UserController {
       }
 
       // Obtener el usuario existente
-      const usuarioExistente = await this.usuarioRepository.buscarUsuario(usuarioId);
+      const usuarioExistente = await this.usuarioRepository.buscarUsuario("id",usuarioId);
 
       if (!usuarioExistente) {
         res.status(404).json({ error: "Usuario no encontrado" });
@@ -97,7 +97,7 @@ export class UserController {
       }
 
       // Verificar que el usuario existe
-      const usuario = await this.usuarioRepository.buscarUsuario(usuarioId);
+      const usuario = await this.usuarioRepository.buscarUsuario("id",usuarioId);
 
       if (!usuario) {
         res.status(404).json({ error: "Usuario no encontrado" });
