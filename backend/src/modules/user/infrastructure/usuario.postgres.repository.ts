@@ -40,7 +40,8 @@ export class UsuarioPostgresRepository implements UserRepository {
 
     async buscarUsuario(id: number): Promise<Usuario> {
         const user = await pool.query(
-            `SELECT sp_usuario_get($1)`, [id]);
+            `SELECT * from usuarios WHERE id_usuario = $1
+            and deleted_at IS NULL`, [id]);
 
         return user.rows[0];
     }
