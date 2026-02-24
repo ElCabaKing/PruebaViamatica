@@ -10,6 +10,17 @@ export class AuthPostgresRepository implements AuthDatasource {
         return res.rows[0]
     }
 
+    async getLastSession(id: number): Promise<any> {
+        const res = await pool.query(
+            `SELECT * FROM sessions
+             WHERE usuario_id = $1
+             ORDER BY fecha_ingreso DESC
+             LIMIT 1`,
+            [id]
+        );
+        return res.rows[0];
+    }
+
     async saveSessionActive(id: number): Promise<void> {
         const res = await pool.query(
             `SELECT sp_session_create($1)`, [id])

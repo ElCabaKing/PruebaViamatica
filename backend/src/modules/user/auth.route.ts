@@ -17,9 +17,19 @@ export const createAuthRoutes = (
     authController.logout(req, res);
   });
 
+  // POST /api/auth/recover - recuperar contraseña
+  router.post("/auth/recover", (req, res) => {
+    authController.recoverPassword(req, res);
+  });
+
   // GET /api/auth/session/:id
   router.get("/auth/session/:id", (req, res) => {
     authController.getSession(req, res);
+  });
+
+  // GET /api/auth/welcome/:id
+  router.get("/auth/welcome/:id", (req, res) => {
+    authController.welcome(req, res);
   });
 
   return router;

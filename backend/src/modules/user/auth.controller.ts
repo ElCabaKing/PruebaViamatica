@@ -53,6 +53,38 @@ export class AuthController {
     }
   }
 
+  async recoverPassword(req: Request, res: Response): Promise<void> {
+    try {
+      const { emailOrUser } = req.body;
+      if (!emailOrUser) {
+        res.status(400).json({ error: "Email o usuario requerido" });
+        return;
+      }
+      // placeholder: en entorno real se enviaría un correo
+      res.status(200).json({ mensaje: "Instrucciones de recuperación enviadas" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Error desconocido";
+      res.status(500).json({ error: message });
+    }
+  }
+
+  async welcome(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const uid = parseInt(id as string, 10);
+      if (isNaN(uid)) {
+        res.status(400).json({ error: "ID inválido" });
+        return;
+      }
+      const user = await this.usuarioRepository.buscarUsuario("id", uid);
+      const session = await this.authDatasource.getLastSession(uid);
+      res.status(200).json({ user, lastSession: session });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Error desconocido";
+      res.status(500).json({ error: message });
+    }
+  }
+
   async getSession(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;

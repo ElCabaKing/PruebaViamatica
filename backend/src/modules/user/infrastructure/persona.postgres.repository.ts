@@ -48,4 +48,28 @@ export class PersonaPostgresRepository implements PersonaDatasource {
 
         return user.rows[0];
     }
+
+    async buscarPersonas(filters: Record<string, any>): Promise<Persona[]> {
+        const conditions: string[] = [];
+        const params: any[] = [];
+        let idx = 1;
+        if (filters.nombre) {
+            conditions.push(`nombres ILIKE $${idx++}`);
+            params.push(`%${filters.nombre}%`);
+        }
+        if (filters.apellidos) {
+            conditions.push(`apellidos ILIKE $${idx++}`);
+            params.push(`%${filters.apellidos}%`);
+        }
+        if (filters.identificacion) {
+            conditions.push(`identificacion = $${idx++}`);
+            params.push(filters.identificacion);
+        }
+        let query = `SELECT * FROM persona WHERE deleted_at IS NULL`;
+        if (conditions.length) {
+            query += ` AND ` + conditions.join(` AND `);
+        }
+        const res = await pool.query(query, params);
+        return res.rows;
+    }
 }

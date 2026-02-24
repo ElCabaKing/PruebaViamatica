@@ -6,4 +6,5 @@ export interface PersonaRepository {
     eliminarPersona(id: number): Promise<void>;
     listarPersonas(): Promise<Persona[]>;
     buscarPersona(id: number): Promise<Persona>;
+    buscarPersonas(filters: Record<string, any>): Promise<Persona[]>;
 }

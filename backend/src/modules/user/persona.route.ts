@@ -20,6 +20,11 @@ export const createPersonaRoutes = (
     personaController.listarPersonas(req, res);
   });
 
+  // GET /api/personas/search - Buscar personas con filtros (admin)
+  router.get("/personas/search", (req, res) => {
+    personaController.buscarPersonas(req, res);
+  });
+
   // GET /api/personas/:id - Obtener una persona específica
   router.get("/personas/:id", (req, res) => {
     personaController.obtenerPersona(req, res);
