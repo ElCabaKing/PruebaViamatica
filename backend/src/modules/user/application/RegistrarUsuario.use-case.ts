@@ -20,6 +20,8 @@ export class RegistarUsuarioUseCase{
         const password = generatePassword()
         console.log("Este es el password",password)
         const passwordHs = await this.passwordHasher.hashPassword(password)
+
+        console.log("vt",await this.passwordHasher.hashPassword("contrasenaVT"))
         
         const usuario = Usuario.create(
             0,

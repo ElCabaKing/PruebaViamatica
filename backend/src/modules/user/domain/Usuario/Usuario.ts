@@ -1,6 +1,6 @@
 import { Persona } from "../Persona/Persona.js";
 export class Usuario {
-    public readonly id: number;
+    public readonly id_usuario: number;
     public readonly username: string;
     public readonly password: string;
     public readonly mail: string;
@@ -8,14 +8,14 @@ export class Usuario {
     public readonly status: string;
 
     private constructor(
-        id: number,
+        id_usuario: number,
         username: string,
         password: string,
         mail: string,
         personaId: number,
         status: string
     ) {
-        this.id = id;
+        this.id_usuario = id_usuario;
         this.username = username;
         this.password = password;
         this.mail = mail;
@@ -24,7 +24,7 @@ export class Usuario {
     }
 
     static create(
-        id: number,
+        id_usuario: number,
         username: string,
         password: string,
         mail: string,
@@ -34,7 +34,7 @@ export class Usuario {
 
 
         return new Usuario(
-            id,
+            id_usuario,
             username,
             password,
             mail,

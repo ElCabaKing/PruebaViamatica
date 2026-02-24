@@ -18,7 +18,7 @@ export class UsuarioPostgresRepository implements UserRepository {
     async editarUsuario(usuario: Usuario): Promise<void> {
         await pool.query(`SELECT sp_usuario_update($1, $2, $3, $4, $5)`,
             [
-                usuario.id,
+                usuario.id_usuario,
                 usuario.username,
                 usuario.password,
                 usuario.mail,
