@@ -3,20 +3,23 @@ import type { Persona } from "../domain/Persona/Persona.js";
 import type { PersonaDatasource } from "../domain/Persona/persona.datasource.js";
 
 export class PersonaPostgresRepository implements PersonaDatasource {
-    async registrarNuevaPersona(persona: Persona): Promise<void> {
-        await pool.query(`CALL sp_persona_create($1, $2, $3, $4, $5)`,
+    async registrarNuevaPersona(persona: Persona): Promise<number> {
+        console.log(persona)
+        const res = await pool.query(
+            `SELECT sp_persona_create($1, $2, $3, $4) AS id`,
             [
-                persona.id,
                 persona.nombre,
                 persona.apellidos,
                 persona.identificacion,
                 persona.fechaNacimiento
             ]
-        )
+        );
+
+        return res.rows[0].id;
     };
 
     async editarPersona(persona: Persona): Promise<void> {
-        await pool.query(`CALL sp_persona_update($1, $2, $3, $4, $5)`,
+        await pool.query(`SELECT sp_persona_update($1, $2, $3, $4, $5)`,
             [
                 persona.id,
                 persona.nombre,
@@ -27,12 +30,12 @@ export class PersonaPostgresRepository implements PersonaDatasource {
     }
 
     async eliminarPersona(id: number): Promise<void> {
-        await pool.query(`CALL sp_persona_delete($1)`, [id])
+        await pool.query(`SELECT sp_persona_delete($1)`, [id])
     };
 
     async listarPersonas(): Promise<Persona[]> {
         const users = await pool.query(
-            `SELECT * FROM personas WHERE DELETEAT IS NULL`
+            `SELECT * FROM persona WHERE deleted_at IS NULL`
         )
 
         return users.rows
@@ -40,7 +43,8 @@ export class PersonaPostgresRepository implements PersonaDatasource {
 
     async buscarPersona(id: number): Promise<Persona> {
         const user = await pool.query(
-            `CALL sp_persona_get($1)`, [id]);
+            `SELECT * from persona WHERE id_persona = $1
+            and deleted_at IS NULL`, [id]);
 
         return user.rows[0];
     }

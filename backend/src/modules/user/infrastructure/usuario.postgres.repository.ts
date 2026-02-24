@@ -5,18 +5,18 @@ import type { UserRepository } from "../domain/Usuario/user.repository.js";
 
 export class UsuarioPostgresRepository implements UserRepository {
     async registrarNuevoUsuario(usuario: Usuario): Promise<void> {
-        await pool.query(`CALL sp_usuario_create($1, $2, $3, $4)`,
+        await pool.query(`SELECT sp_usuario_create($1, $2, $3, $4)`,
             [
                 usuario.username,
                 usuario.password,
-                usuario.personaId,
                 usuario.mail,
+                usuario.personaId,
             ]
         )
     };
 
     async editarUsuario(usuario: Usuario): Promise<void> {
-        await pool.query(`CALL sp_usuario_update($1, $2, $3, $4, $5)`,
+        await pool.query(`SELECT sp_usuario_update($1, $2, $3, $4, $5)`,
             [
                 usuario.id,
                 usuario.username,
@@ -27,12 +27,12 @@ export class UsuarioPostgresRepository implements UserRepository {
     }
 
     async eliminarUsuario(id: number): Promise<void> {
-        await pool.query(`CALL sp_usuario_delete($1)`, [id])
+        await pool.query(`SELECT sp_usuario_delete($1)`, [id])
     };
 
     async listarUsuarios(): Promise<Usuario[]> {
         const users = await pool.query(
-            `SELECT * FROM usuarios WHERE DELETEAT IS NULL`
+            `SELECT * FROM usuarios WHERE deleted_at IS NULL`
         )
 
         return users.rows
@@ -40,7 +40,7 @@ export class UsuarioPostgresRepository implements UserRepository {
 
     async buscarUsuario(id: number): Promise<Usuario> {
         const user = await pool.query(
-            `CALL sp_usuario_get($1)`, [id]);
+            `SELECT sp_usuario_get($1)`, [id]);
 
         return user.rows[0];
     }

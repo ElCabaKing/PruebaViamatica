@@ -1,21 +1,20 @@
-
 CREATE OR REPLACE FUNCTION sp_persona_create(
-    p_nombres VARCHAR,
+     p_nombres VARCHAR,
     p_apellidos VARCHAR,
     p_identificacion VARCHAR,
     p_fecha_nacimiento DATE
 )
-RETURNS persona AS $$
-DECLARE v persona;
+RETURNS INTEGER AS $$
+DECLARE
+    v_id INTEGER;
 BEGIN
     INSERT INTO persona(nombres, apellidos, identificacion, fecha_nacimiento)
     VALUES (p_nombres, p_apellidos, p_identificacion, p_fecha_nacimiento)
-    RETURNING * INTO v;
+    RETURNING id_persona INTO v_id;
 
-    RETURN v;
+    RETURN v_id;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION sp_persona_get(p_id INTEGER)
 RETURNS persona AS $$
@@ -29,7 +28,6 @@ BEGIN
     RETURN v;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION sp_persona_update(
     p_id INTEGER,
@@ -54,7 +52,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION sp_persona_delete(p_id INTEGER)
 RETURNS persona AS $$
 DECLARE v persona;
@@ -69,7 +66,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION sp_persona_restore(p_id INTEGER)
 RETURNS persona AS $$
 DECLARE v persona;
@@ -82,7 +78,6 @@ BEGIN
     RETURN v;
 END;
 $$ LANGUAGE plpgsql;
-
 
 -- ==========================================================
 -- 3️⃣ ROL
@@ -99,7 +94,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION sp_rol_delete(p_id INTEGER)
 RETURNS rol AS $$
 DECLARE v rol;
@@ -113,7 +107,6 @@ BEGIN
     RETURN v;
 END;
 $$ LANGUAGE plpgsql;
-
 
 -- ==========================================================
 -- 4️⃣ USUARIO
@@ -135,7 +128,6 @@ BEGIN
     RETURN v;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE OR REPLACE FUNCTION sp_usuario_get(p_id INTEGER)
 RETURNS usuarios AS $$
@@ -190,7 +182,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 -- ==========================================================
 -- 5️⃣ SESSION
 -- ==========================================================
@@ -210,7 +201,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION sp_session_close(
     p_id INTEGER,
     p_fecha_cierre DATE
@@ -228,7 +218,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION sp_session_delete(p_id INTEGER)
 RETURNS sessions AS $$
 DECLARE v sessions;
@@ -242,4 +231,3 @@ BEGIN
     RETURN v;
 END;
 $$ LANGUAGE plpgsql;
-

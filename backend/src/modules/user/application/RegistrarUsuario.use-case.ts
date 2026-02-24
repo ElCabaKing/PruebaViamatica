@@ -13,20 +13,20 @@ export class RegistarUsuarioUseCase{
     ){}
 
     async execute(persona:Persona){
-       await this.personaRepository.registrarNuevaPersona(persona)
-
+       const personaId = await this.personaRepository.registrarNuevaPersona(persona)
         const userEmail = generateBaseEmail(persona.nombre, persona.apellidos)
         const username = generateUsername(persona.nombre)
         const passwordHs = await this.passwordHasher.hashPassword(username)
+        
         const usuario = Usuario.create(
-            persona.id, 
+            0,
             username, 
             passwordHs, //Username es el password (cambiar)
             userEmail,
-            persona.id, 
+            personaId, 
             "activo"
         )
-
+        console.log("usuario",usuario)
         await this.usuarioRepository.registrarNuevoUsuario(usuario)
         return 
     }
