@@ -21,11 +21,11 @@ INSERT INTO rol_opciones (nombre_opcion) VALUES
 ('ACCESS_DASHBOARD');
 
 INSERT INTO usuarios (username, password, mail, session_active, status, persona_id) VALUES
-('juanp', '$2b$10$hashsimulado1', 'juan@example.com', true, 'AC', 1),
-('mariag', '$2b$10$hashsimulado2', 'maria@example.com', false, 'AC', 2),
-('carlosr', '$2b$10$hashsimulado3', 'carlos@example.com', false, 'AC', 3),
-('anat', '$2b$10$hashsimulado4', 'ana@example.com', true, 'AC', 4),
-('luism', '$2b$10$hashsimulado5', 'luis@example.com', false, 'IN', 5);
+('juanp', '$2b$10$sezl3OVqhBM1Ropv9b/tUOMRzgTZM3h9.a586gW1XKce1jqBCF4ES', 'juan@example.com', true, 'AC', 1),
+('mariag', '$2b$10$sezl3OVqhBM1Ropv9b/tUOMRzgTZM3h9.a586gW1XKce1jqBCF4ES', 'maria@example.com', false, 'AC', 2),
+('carlosr', '$2b$10$sezl3OVqhBM1Ropv9b/tUOMRzgTZM3h9.a586gW1XKce1jqBCF4ES', 'carlos@example.com', false, 'AC', 3),
+('anat', '$2b$10$sezl3OVqhBM1Ropv9b/tUOMRzgTZM3h9.a586gW1XKce1jqBCF4ES', 'ana@example.com', true, 'AC', 4),
+('luism', '$2b$10$sezl3OVqhBM1Ropv9b/tUOMRzgTZM3h9.a586gW1XKce1jqBCF4ES', 'luis@example.com', false, 'IN', 5);
 
 
 INSERT INTO sessions (fecha_ingreso, fecha_cierre, usuario_id) VALUES

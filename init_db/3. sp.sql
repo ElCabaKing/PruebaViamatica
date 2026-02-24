@@ -187,34 +187,24 @@ $$ LANGUAGE plpgsql;
 -- ==========================================================
 
 CREATE OR REPLACE FUNCTION sp_session_create(
-    p_fecha DATE,
     p_usuario_id INTEGER
 )
-RETURNS sessions AS $$
-DECLARE v sessions;
+RETURNS void AS $$
 BEGIN
     INSERT INTO sessions(fecha_ingreso, usuario_id)
-    VALUES (p_fecha, p_usuario_id)
-    RETURNING * INTO v;
-
-    RETURN v;
+    VALUES (NOW(), p_usuario_id);
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION sp_session_close(
-    p_id INTEGER,
-    p_fecha_cierre DATE
+    p_id INTEGER
 )
-RETURNS sessions AS $$
-DECLARE v sessions;
+RETURNS void AS $$
 BEGIN
     UPDATE sessions
-    SET fecha_cierre = p_fecha_cierre
+    SET fecha_cierre = NOW()
     WHERE id_session = p_id
-      AND deleted_at IS NULL
-    RETURNING * INTO v;
-
-    RETURN v;
+      AND deleted_at IS NULL;
 END;
 $$ LANGUAGE plpgsql;
 
